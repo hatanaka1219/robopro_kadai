@@ -1,0 +1,74 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <style>
+    li {
+        margin-left: -50px;
+        border-bottom: 0.5px solid white;
+        width: 100vw;
+        color: white;
+        padding-left: 10px;
+    }
+    .success {
+        background-color: midnightblue;
+    }
+    .failed {
+        background-color: red;
+    }
+</style>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flashes>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/png, image/jpeg">
+      <input type="radio" name="color" value="fc" checked>カラー
+      <input type="radio" name="color" value="gs">グレースケール
+      <button type="submit">submit</button>
+    </form>
+
+
+
+    <form method="post" action="/sendtext">
+      フィルタ<br>
+      <input type="text" size="2" name="arr0" value = "0"><input type="text" size="2" name="arr1" value = "0"><input type="text" size="2" name="arr2" value = "0"><br>
+      <input type="text" size="2" name="arr3" value = "0"><input type="text" size="2" name="arr4" value = "1"><input type="text" size="2" name="arr5" value = "0"><br>
+      <input type="text" size="2" name="arr6" value = "0"><input type="text" size="2" name="arr7" value = "0"><input type="text" size="2" name="arr8" value = "0"><br>
+      k = 1/<input type="text" size="1" name="numk" value = "1">
+    <br>
+      hsv空間での色変換
+      <table  width="85">
+        <th>h</th><th>s</th><th>v</th><tr>
+        <th><input type="text" size="2" name="h" value = "1"></th>
+        <th><input type="text" size="2" name="s" value = "1"></th>
+        <th><input type="text" size="2" name="v" value = "1"></th><br>
+      </table>
+      <button name="send_value" value="send_value">send array</button>
+    </form>
+    <br>
+
+
+
+    <form action="/amazonz" method="post">
+      <a href="http://www.superhero-year.com/amazons/season1.html" target="_blank">アマゾンズ</a>フィルター<br>
+
+      <button name="amazonz" value="amazonz">AmazonZ</button>
+    </form>
+    <div>
+        <img src="{{url_for('static', filename='images/raw.png')}}" style="margin-top: 30px; vertical-align: bottom; width: 600px;" class="img-fluid" alt="Responsive image">
+        <figcaption>加工前</figcaption>
+    </div>
+    <div>
+      <img src="{{url_for('static', filename='images/out/proc.png')}}" style="margin-top: 30px; vertical-align: bottom; width: 600px;" class="img-fluid" alt="Responsive image">
+      <figcaption>加工後</figcaption>
+    </div>
+  </body>
+</html>
